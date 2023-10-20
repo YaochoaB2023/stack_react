@@ -1,31 +1,31 @@
 import Note from "../models/notes.js";
 
-export const getNotes = async (req, res, next) => {
+export const getNotes = async (req, res) => {
   try {
     const notes = await Note.find();
     res.json(notes);
   } catch (error) {
-    next(error);
+    console.log(error)
   }
 };
 
-export const createNote = async (req, res, next) => {
+export const createNote = async (req, res ) => {
   try {
-    const { title, description, date, writer } = req.body;
+    const { title, description, date, writer } = req.body
     const newNote = new Note({
       title,
       description,
       date,
-      writer,
+      writer
     });
     const savedNote = await newNote.save();
     return res.json(savedNote);
   } catch (error) {
-    next(error);
+    console.log(error)
   }
 };
 
-export const getNote = async (req, res, next) => {
+export const getNote = async (req, res) => {
   try {
     const note = await Note.findById(req.params.id);
 
@@ -34,14 +34,13 @@ export const getNote = async (req, res, next) => {
       error.status = 404;
       throw error;
     }
-
     res.json(note);
   } catch (error) {
-    next(error);
+    console.log(error)
   }
 };
 
-export const deleteNote = async (req, res, next) => {
+export const deleteNote = async (req, res, ) => {
   try {
     const deletedNote = await Note.findByIdAndDelete(req.params.id);
 
@@ -53,13 +52,13 @@ export const deleteNote = async (req, res, next) => {
 
     return res.sendStatus(204);
   } catch (error) {
-    next(error);
+    console.log(error)
   }
 };
 
-export const updateNote = async (req, res, next) => {
+export const updateNote = async (req, res, ) => {
   try {
-    const { title, content, duration, author } = req.body;
+    const { title, description, duration, writer } = req.body;
     const noteUpdated = await Note.findByIdAndUpdate(
       req.params.id,
       {
@@ -67,7 +66,7 @@ export const updateNote = async (req, res, next) => {
           title,
           description,
           duration,
-          writer,
+          writer
         },
       },
       {
@@ -77,6 +76,6 @@ export const updateNote = async (req, res, next) => {
 
     return res.json(noteUpdated);
   } catch (error) {
-    next(error);
+    console.log(error)
   }
 };

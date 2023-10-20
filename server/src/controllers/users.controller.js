@@ -1,15 +1,15 @@
 import User from "../models/users.js";
 
-export const getUsers = async (req, res, next) => {
+export const getUsers = async (req, res) => {
   try {
     const users = await User.find();
     res.json(users);
   } catch (error) {
-    next(error);
+    console.log(error)
   }
 };
 
-export const createUser = async (req, res, next) => {
+export const createUser = async (req, res) => {
   try {
     const { username } = req.body;
 
@@ -26,14 +26,13 @@ export const createUser = async (req, res, next) => {
     const userSaved = await newUser.save();
     return res.json(userSaved);
   } catch (error) {
-    next(error);
+    console.log(error)
   }
 };
 
-export const deleteUser = async (req, res, next) => {
+export const deleteUser = async (req, res) => {
   try {
-    const { id } = req.params;
-    const userDeleted = await User.findByIdAndDelete(id);
+    const userDeleted = await User.findByIdAndDelete(req.params.id);
 
     if (!userDeleted) {
       const error = new Error("User not found");
@@ -43,6 +42,6 @@ export const deleteUser = async (req, res, next) => {
 
     return res.sendStatus(204);
   } catch (error) {
-    next(error);
+    console.log(error)
   }
 };

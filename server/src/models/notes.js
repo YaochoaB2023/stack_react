@@ -16,12 +16,11 @@ const noteSchema = new mongoose.Schema(
     },
     date: {
       type: Date,
-      default: new Date(),
+      default: Date.now
     },
   },
   {
-    timestamps: true,
-    versionKey: false,
+    timestamps: true
   }
 );
 
